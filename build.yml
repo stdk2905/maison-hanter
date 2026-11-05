@@ -1,0 +1,24 @@
+
+name: Compiler Maison Hantee
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Recuperer le projet
+        uses: actions/checkout@v4
+
+      - name: Compiler le jeu
+        run: |
+          cmake -S . -B build -A x64
+          cmake --build build --config Release
+
+      - name: Exporter le jeu
+        uses: actions/upload-artifact@v4
+        with:
+          name: MaisonHantee-Windows
+          path: build/Release/MaisonHantee.exe
